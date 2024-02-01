@@ -1,12 +1,12 @@
-App(
-    appid="subghz_bruteforcer",
-    name="Sub-GHz Bruteforcer",
+应用程序（
+    appid =“subghz_bruteforcer”，
+    name="Sub-GHz 暴力破解器",
     apptype=FlipperAppType.EXTERNAL,
-    entry_point="subbrute_app",
-    requires=["gui","dialogs"],
-    stack_size=2 * 1024,
-    order=11,
+    入口点=“subbrute_app”，
+    需要=["gui","对话框"],
+    堆栈大小=2 * 1024，
+    订单=11，
     fap_icon="images/subbrute_10px.png",
     fap_category="Sub-GHz",
-    fap_icon_assets="images",
-)
+    fap_icon_assets="图像",
+）
