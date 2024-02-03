@@ -105,8 +105,8 @@ typedef enum {
  * - `SubBruteAttackSMC532624bit330`: SMC5326 24-bit 330 MHz sub-brute attack.
  * - `SubBruteAttackSMC532624bit433`: SMC5326 6-bit 433 MHz sub-brute attack.
  * - `SubBruteAttackPT226024bit315`: PT2260 24-bit 315 MHz sub-brute attack.
- * - `SubBruteAttackPT226024bit330`: PT2260 24-bit 330 MHz sub-brute attack.
- * - `SubBruteAttackPT226024bit390`: PT2260 24-bit 390 MHz sub-brute attack.
+ * - `SubBruteAttackPT226024bit430`: PT2260 24-bit 330 MHz sub-brute attack.
+ * - `SubBruteAttackPT226024bit418`: PT2260 24-bit 390 MHz sub-brute attack.
  * - `SubBruteAttackPT226024bit433`: PT2260 24-bit 433 MHz sub-brute attack.
  * - `SubBruteAttackLoadFile`: Sub-brute attack using values loaded from a file.
  * - `SubBruteAttackTotalCount`: Total number of sub-brute attacks.
@@ -145,8 +145,8 @@ typedef enum {
     SubBruteAttackSMC532624bit330,
     SubBruteAttackSMC532624bit433,
     SubBruteAttackPT226024bit315,
-    SubBruteAttackPT226024bit330,
-    SubBruteAttackPT226024bit390,
+    SubBruteAttackPT226024bit430,
+    SubBruteAttackPT226024bit418,
     SubBruteAttackPT226024bit433,
     SubBruteAttackLoadFile,
     SubBruteAttackTotalCount,

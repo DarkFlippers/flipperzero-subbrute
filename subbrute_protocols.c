@@ -315,7 +315,7 @@ const SubBruteProtocol subbrute_protocol_pt2260_24bit_315 = {
  * PT2260 (Princeton) 24bit 330MHz
  */
 const SubBruteProtocol subbrute_protocol_pt2260_24bit_330 = {
-    .frequency = 330000000,
+    .frequency = 430000000,
     .bits = 24,
     .te = 286,
     .repeat = 4,
@@ -326,7 +326,7 @@ const SubBruteProtocol subbrute_protocol_pt2260_24bit_330 = {
  * PT2260 (Princeton) 24bit 390MHz
  */
 const SubBruteProtocol subbrute_protocol_pt2260_24bit_390 = {
-    .frequency = 390000000,
+    .frequency = 418000000,
     .bits = 24,
     .te = 286,
     .repeat = 4,
@@ -439,8 +439,8 @@ static const char* subbrute_protocol_names[] = {
     [SubBruteAttackSMC532624bit330] = "SMC5326 25bit 330MHz",
     [SubBruteAttackSMC532624bit433] = "SMC5326 25bit 433MHz",
     [SubBruteAttackPT226024bit315] = "PT2260 24bit 315MHz",
-    [SubBruteAttackPT226024bit330] = "PT2260 24bit 330MHz",
-    [SubBruteAttackPT226024bit390] = "PT2260 24bit 390MHz",
+    [SubBruteAttackPT226024bit430] = "PT2260 24bit 330MHz",
+    [SubBruteAttackPT226024bit418] = "PT2260 24bit 390MHz",
     [SubBruteAttackPT226024bit433] = "PT2260 24bit 433MHz",
     [SubBruteAttackLoadFile] = "BF existing dump",
     [SubBruteAttackTotalCount] = "Total Count",
@@ -490,8 +490,8 @@ const SubBruteProtocol* subbrute_protocol_registry[] = {
     [SubBruteAttackSMC532624bit330] = &subbrute_protocol_smc5326_24bit_330,
     [SubBruteAttackSMC532624bit433] = &subbrute_protocol_smc5326_24bit_433,
     [SubBruteAttackPT226024bit315] = &subbrute_protocol_pt2260_24bit_315,
-    [SubBruteAttackPT226024bit330] = &subbrute_protocol_pt2260_24bit_330,
-    [SubBruteAttackPT226024bit390] = &subbrute_protocol_pt2260_24bit_390,
+    [SubBruteAttackPT226024bit430] = &subbrute_protocol_pt2260_24bit_330,
+    [SubBruteAttackPT226024bit4180] = &subbrute_protocol_pt2260_24bit_390,
     [SubBruteAttackPT226024bit433] = &subbrute_protocol_pt2260_24bit_433,
     [SubBruteAttackLoadFile] = &subbrute_protocol_load_file};
 
@@ -645,8 +645,8 @@ void subbrute_protocol_create_candidate_for_default(
             p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;
         }
     } else if(file == PT2260FileProtocol) {
-        const uint8_t lut[] = {0x00, 0x01, 0x03}; // 00, 01, 11
-        const uint64_t button_open = 0x03; // 11
+        const uint8_t lut[] = {0x00, 0x01, 0x0C}; // 00, 01, 11
+        const uint64_t button_open = 0x0C; // 11
         //const uint8_t button_lock = 0x0C; // 1100
         //const uint8_t button_stop = 0x30; // 110000
         //const uint8_t button_close = 0xC0; // 11000000
@@ -857,8 +857,8 @@ uint64_t
         attack_type == SubBruteAttackUNILARM24bit330 ||
         attack_type == SubBruteAttackUNILARM24bit433 ||
         attack_type == SubBruteAttackPT226024bit315 ||
-        attack_type == SubBruteAttackPT226024bit330 ||
-        attack_type == SubBruteAttackPT226024bit390 ||
+        attack_type == SubBruteAttackPT226024bit430 ||
+        attack_type == SubBruteAttackPT226024bit4180 ||
         attack_type == SubBruteAttackPT226024bit433) {
         max_value = 6561;
     } else {
