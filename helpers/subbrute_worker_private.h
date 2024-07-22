@@ -1,6 +1,7 @@
 #pragma once
 
 #include "subbrute_worker.h"
+
 #include <lib/subghz/protocols/base.h>
 #include <lib/subghz/transmitter.h>
 #include <lib/subghz/receiver.h>
@@ -14,41 +15,41 @@
  * It manages the state, configuration and execution of the sub-brute forcing algorithm.
  */
 struct SubBruteWorker {
-    SubBruteWorkerState state;
-    volatile bool worker_running;
-    volatile bool initiated;
-    volatile bool transmit_mode;
+    SubBruteWorkerState state; /**< State of the worker */
+    volatile bool worker_running; /**< Worker running state */
+    volatile bool initiated; /**< Initiated state */
+    volatile bool transmit_mode; /**< Transmit mode */
 
-    // Current step
-    uint64_t step;
+    uint64_t step; /**< Current step */
 
-    // SubGhz
-    FuriThread* thread;
+    FuriThread* thread; /**< Thread */
+
+    /** @see @c SubGhz service for more info */
+    SubGhzEnvironment* environment; /**< Environment */
     SubGhzProtocolDecoderBase* decoder_result;
-    SubGhzEnvironment* environment;
-    SubGhzTransmitter* transmitter;
-    const char* protocol_name;
-    uint8_t tx_timeout_ms;
-    const SubGhzDevice* radio_device;
+    SubGhzTransmitter* transmitter; /**< Transmitter */
+    const char* protocol_name; /**< Name of the protocol */
+    uint8_t tx_timeout_ms; /**< Timeout for transmit */
+    const SubGhzDevice* radio_device; /**< Radio device */
 
     // Initiated values
-    SubBruteAttacks attack; // Attack state
-    uint32_t frequency;
-    FuriHalSubGhzPreset preset;
-    SubBruteFileProtocol file;
-    uint8_t bits;
-    uint32_t te;
-    uint8_t repeat;
-    uint8_t load_index; // Index of group to bruteforce in loaded file
-    uint64_t file_key;
-    uint64_t max_value; // Max step
-    bool two_bytes;
+    SubBruteAttacks attack; /**< Attack state */
+    uint32_t frequency; /**< Frequency */
+    FuriHalSubGhzPreset preset; /**< Preset */
+    SubBruteFileProtocol file; /**< File protocol */
+    uint8_t bits; /**< Number of bits in key */
+    uint32_t te; /**< Time to wait for response */
+    uint8_t repeat; /**< Number of extra repeats */
+    uint8_t load_index; /**< Index of group to bruteforce in loaded file */
+    uint64_t file_key; /**< Key from file */
+    uint64_t max_value; /**< Max step */
+    bool two_bytes; /**< Two bytes key */
 
     // Manual transmit
-    uint32_t last_time_tx_data;
+    uint32_t last_time_tx_data; /**< Last time data was transmitted */
 
     // Callback for changed states
-    SubBruteWorkerCallback callback;
+    SubBruteWorkerCallback callback; /**< Callback for changed states */
     void* context;
 };
 

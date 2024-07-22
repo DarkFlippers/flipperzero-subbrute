@@ -17,7 +17,7 @@
 #include <gui/modules/loading.h>
 #include <gui/modules/variable_item_list.h>
 
-#include "subghz_bruteforcer_icons.h"
+#include <subghz_bruteforcer_icons.h>
 
 #include <dialogs/dialogs.h>
 
@@ -31,7 +31,7 @@
 #include "views/subbrute_attack_view.h"
 #include "views/subbrute_main_view.h"
 
-#define SUBBRUTEFORCER_VER "Sub-GHz BruteForcer 3.C"
+#define SUB_BRUTE_FORCER_VERSION "Sub-GHz BruteForcer 3.D"
 
 #ifdef FURI_DEBUG
 //#define SUBBRUTE_FAST_TRACK false
@@ -45,11 +45,11 @@
  * corresponds to a specific screen or UI element in the application.
  */
 typedef enum {
-    SubBruteViewNone,
+    SubBruteViewNone, /**< Not used */
     SubBruteViewMain,
     SubBruteViewAttack,
     SubBruteViewTextInput,
-    SubBruteViewDialogEx,
+    SubBruteViewDialogEx, /**< Not used */
     SubBruteViewPopup,
     SubBruteViewWidget,
     SubBruteViewStack,
@@ -63,7 +63,7 @@ typedef enum {
  * This class contains the various elements and variables necessary for the functioning of a SubBrute application.
  */
 struct SubBruteState {
-    // GUI elements
+    /** GUI elements */
     NotificationApp* notifications;
     Gui* gui;
     ViewDispatcher* view_dispatcher;
@@ -73,26 +73,23 @@ struct SubBruteState {
     Widget* widget;
     VariableItemList* var_list;
     DialogsApp* dialogs;
-    const SubGhzDevice* radio_device;
 
-    // Text store
-    char text_store[SUBBRUTE_MAX_LEN_NAME];
+
+    char text_store[SUBBRUTE_MAX_LEN_NAME]; /**< Text store */
     FuriString* file_path;
 
-    // Views
-    SubBruteMainView* view_main;
-    SubBruteAttackView* view_attack;
+    const SubGhzDevice* radio_device; /**< Radio device */
+
+    /** Views */
+    SubBruteMainView* view_main; /**< Main menu */
+    SubBruteAttackView* view_attack; /**< View for attack and setup current protocol */
     SubBruteView current_view;
 
-    // Scene
-    SceneManager* scene_manager;
+    SceneManager* scene_manager; /**< Scene manager */
 
-    // SubBruteDevice
-    SubBruteDevice* device;
-    // SubBruteWorker
-    SubBruteWorker* worker;
-    // Last used settings
-    SubBruteSettings* settings;
+    SubBruteDevice* device; /**< SubBruteDevice to get value of transmission */
+    SubBruteWorker* worker; /**< SubBruteWorker worker for background job */
+    SubBruteSettings* settings; /**< Last used settings */
 };
 
 /**

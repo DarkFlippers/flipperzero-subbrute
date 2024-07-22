@@ -71,7 +71,7 @@
  * Event type for the load file event.
  */
 typedef enum {
-    // Reserve first 100 events for button types and indexes, starting from 0
+    /** Reserve first 100 events for button types and indexes, starting from 0 */
     SubBruteCustomEventTypeReserved = 100,
 
     SubBruteCustomEventTypeBackPressed,

@@ -555,6 +555,20 @@ static const char* subbrute_key_small_no_tail = "Bit: %d\nKey: %s\nRepeat: %d\n"
 //    "Filetype: Flipper SubGhz Key File\nVersion: 1\nFrequency: %u\nPreset: %s\nProtocol: %s\nBit: %d\n";
 static const char* subbrute_key_small_with_tail = "Bit: %d\nKey: %s\nTE: %d\nRepeat: %d\n";
 
+const uint8_t lut_uni_alarm_smsc[] = {0x00, 0x02, 0x03}; // 00, 10, 11
+const uint8_t lut_pt2260[] = {0x00, 0x01, 0x03}; // 00, 01, 11
+
+const uint64_t gate_smsc = 0x01D5; // 111010101
+//const uint8_t gate2 = 0x0175; // 101110101
+
+const uint64_t gate_pt2260 = 0x03; // 11
+//const uint8_t button_lock = 0x0C; // 1100
+//const uint8_t button_stop = 0x30; // 110000
+//const uint8_t button_close = 0xC0; // 11000000
+
+const uint64_t gate_uni_alarm = 3 << 7;
+//const uint8_t gate2 = 3 << 5;
+
 const char* subbrute_protocol_name(SubBruteAttacks index) {
     return subbrute_protocol_names[index];
 }
@@ -601,7 +615,7 @@ void subbrute_protocol_create_candidate_for_existing_file(
     size_t bit_index,
     uint64_t file_key,
     bool two_bytes) {
-    uint8_t p[8];
+    uint8_t p[8] = {0};
     for(int i = 0; i < 8; i++) {
         p[i] = (uint8_t)(file_key >> 8 * (7 - i)) & 0xFF;
     }
@@ -635,56 +649,41 @@ void subbrute_protocol_create_candidate_for_default(
     FuriString* candidate,
     SubBruteFileProtocol file,
     uint64_t step) {
-    uint8_t p[8];
-    if(file == SMC5326FileProtocol) {
-        const uint8_t lut[] = {0x00, 0x02, 0x03}; // 00, 10, 11
-        const uint64_t gate1 = 0x01D5; // 111010101
-        //const uint8_t gate2 = 0x0175; // 101110101
+    uint8_t p[8] = {0};
+    uint64_t total = 0;
 
-        uint64_t total = 0;
+    if(file == SMC5326FileProtocol) {
         for(size_t j = 0; j < 8; j++) {
-            total |= lut[step % 3] << (2 * j);
+            total |= lut_uni_alarm_smsc[step % 3] << (2 * j);
             double sub_step = (double)step / 3;
             step = (uint64_t)floor(sub_step);
         }
         total <<= 9;
-        total |= gate1;
+        total |= gate_smsc;
 
         for(int i = 0; i < 8; i++) {
             p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;
         }
     } else if(file == UNILARMFileProtocol) {
-        const uint8_t lut[] = {0x00, 0x02, 0x03}; // 00, 10, 11
-        const uint64_t gate1 = 3 << 7;
-        //const uint8_t gate2 = 3 << 5;
-
-        uint64_t total = 0;
         for(size_t j = 0; j < 8; j++) {
-            total |= lut[step % 3] << (2 * j);
+            total |= lut_uni_alarm_smsc[step % 3] << (2 * j);
             double sub_step = (double)step / 3;
             step = (uint64_t)floor(sub_step);
         }
         total <<= 9;
-        total |= gate1;
+        total |= gate_uni_alarm;
 
         for(int i = 0; i < 8; i++) {
             p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;
         }
     } else if(file == PT2260FileProtocol) {
-        const uint8_t lut[] = {0x00, 0x01, 0x03}; // 00, 01, 11
-        const uint64_t button_open = 0x03; // 11
-        //const uint8_t button_lock = 0x0C; // 1100
-        //const uint8_t button_stop = 0x30; // 110000
-        //const uint8_t button_close = 0xC0; // 11000000
-
-        uint64_t total = 0;
         for(size_t j = 0; j < 8; j++) {
-            total |= lut[step % 3] << (2 * j);
+            total |= lut_pt2260[step % 3] << (2 * j);
             double sub_step = (double)step / 3;
             step = (uint64_t)floor(sub_step);
         }
         total <<= 8;
-        total |= button_open;
+        total |= gate_pt2260;
 
         for(int i = 0; i < 8; i++) {
             p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;

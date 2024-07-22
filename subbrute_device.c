@@ -246,14 +246,14 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
             break;
         }
         if(!flipper_format_read_header(fff_data_file, temp_str, &temp_data32)) {
-            FURI_LOG_E(TAG, "Missing or incorrect header");
+            FURI_LOG_E(TAG, error_device_missing_header);
             result = SubBruteFileResultMissingOrIncorrectHeader;
             break;
         }
 
         // Frequency
         if(!flipper_format_read_uint32(fff_data_file, "Frequency", &temp_data32, 1)) {
-            FURI_LOG_E(TAG, "Missing or incorrect Frequency");
+            FURI_LOG_E(TAG, error_device_incorrect_frequency);
             result = SubBruteFileResultMissingOrIncorrectFrequency;
             break;
         }
@@ -276,7 +276,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
 
         // Preset
         if(!flipper_format_read_string(fff_data_file, "Preset", temp_str)) {
-            FURI_LOG_E(TAG, "Preset FAIL");
+            FURI_LOG_E(TAG, error_device_preset_fail);
             result = SubBruteFileResultPresetInvalid;
             break;
         }
@@ -285,7 +285,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
         const char* protocol_file = NULL;
         // Protocol
         if(!flipper_format_read_string(fff_data_file, "Protocol", temp_str)) {
-            FURI_LOG_E(TAG, "Missing Protocol");
+            FURI_LOG_E(TAG, error_device_missing_protocol);
             result = SubBruteFileResultMissingProtocol;
             break;
         }
@@ -300,7 +300,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
 
         if((!instance->decoder_result) || (strcmp(protocol_file, "RAW") == 0) ||
            (strcmp(protocol_file, "Unknown") == 0)) {
-            FURI_LOG_E(TAG, "Protocol unsupported");
+            FURI_LOG_E(TAG, error_device_protocol_unsupported);
             result = SubBruteFileResultProtocolNotSupported;
             break;
         }
@@ -316,7 +316,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
 
         // Bit
         if(!flipper_format_read_uint32(fff_data_file, "Bit", &temp_data32, 1)) {
-            FURI_LOG_E(TAG, "Missing or incorrect Bit");
+            FURI_LOG_E(TAG, error_device_missing_bit);
             result = SubBruteFileResultMissingOrIncorrectBit;
             break;
         }
@@ -342,7 +342,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
 
         // TE
         if(!flipper_format_read_uint32(fff_data_file, "TE", &temp_data32, 1)) {
-            FURI_LOG_E(TAG, "Missing or incorrect TE");
+            FURI_LOG_E(TAG, error_device_missing_te);
             //result = SubBruteFileResultMissingOrIncorrectTe;
             //break;
         } else {
@@ -406,56 +406,6 @@ void subbrute_device_attack_set_default_values(
     }
 }
 
-const char* subbrute_device_error_get_desc(SubBruteFileResult error_id) {
-    const char* result;
-    switch(error_id) {
-    case(SubBruteFileResultOk):
-        result = "OK";
-        break;
-    case(SubBruteFileResultErrorOpenFile):
-        result = "invalid name/path";
-        break;
-    case(SubBruteFileResultMissingOrIncorrectHeader):
-        result = "Missing or incorrect header";
-        break;
-    case(SubBruteFileResultFrequencyNotAllowed):
-        result = "Invalid frequency!";
-        break;
-    case(SubBruteFileResultMissingOrIncorrectFrequency):
-        result = "Missing or incorrect Frequency";
-        break;
-    case(SubBruteFileResultPresetInvalid):
-        result = "Preset FAIL";
-        break;
-    case(SubBruteFileResultMissingProtocol):
-        result = "Missing Protocol";
-        break;
-    case(SubBruteFileResultProtocolNotSupported):
-        result = "Protocol unsupported";
-        break;
-    case(SubBruteFileResultDynamicProtocolNotValid):
-        result = "Dynamic protocol unsupported";
-        break;
-    case(SubBruteFileResultProtocolNotFound):
-        result = "Protocol not found";
-        break;
-    case(SubBruteFileResultMissingOrIncorrectBit):
-        result = "Missing or incorrect Bit";
-        break;
-    case(SubBruteFileResultMissingOrIncorrectKey):
-        result = "Missing or incorrect Key";
-        break;
-    case(SubBruteFileResultMissingOrIncorrectTe):
-        result = "Missing or incorrect TE";
-        break;
-    case SubBruteFileResultUnknown:
-    default:
-        result = "Unknown error";
-        break;
-    }
-    return result;
-}
-
 void subbrute_device_free_protocol_info(SubBruteDevice* instance) {
     furi_assert(instance);
     instance->protocol_info = NULL;
@@ -463,4 +413,38 @@ void subbrute_device_free_protocol_info(SubBruteDevice* instance) {
         free(instance->file_protocol_info);
     }
     instance->file_protocol_info = NULL;
+}
+
+const char* subbrute_device_error_get_desc(SubBruteFileResult error_id) {
+    switch(error_id) {
+    case(SubBruteFileResultOk):
+        return error_device_ok;
+    case(SubBruteFileResultErrorOpenFile):
+        return error_device_invalid_path;
+    case(SubBruteFileResultMissingOrIncorrectHeader):
+        return error_device_missing_header;
+    case(SubBruteFileResultFrequencyNotAllowed):
+        return error_device_invalid_frequency;
+    case(SubBruteFileResultMissingOrIncorrectFrequency):
+        return error_device_incorrect_frequency;
+    case(SubBruteFileResultPresetInvalid):
+        return error_device_preset_fail;
+    case(SubBruteFileResultMissingProtocol):
+        return error_device_missing_protocol;
+    case(SubBruteFileResultProtocolNotSupported):
+        return error_device_protocol_unsupported;
+    case(SubBruteFileResultDynamicProtocolNotValid):
+        return error_device_dynamic_protocol_unsupported;
+    case(SubBruteFileResultProtocolNotFound):
+        return error_device_protocol_not_found;
+    case(SubBruteFileResultMissingOrIncorrectBit):
+        return error_device_missing_bit;
+    case(SubBruteFileResultMissingOrIncorrectKey):
+        return error_device_missing_key;
+    case(SubBruteFileResultMissingOrIncorrectTe):
+        return error_device_missing_te;
+    case SubBruteFileResultUnknown:
+    default:
+        return error_device_unknown;
+    }
 }

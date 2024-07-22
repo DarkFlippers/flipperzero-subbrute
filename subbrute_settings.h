@@ -14,8 +14,8 @@
  * the last index used.
  */
 typedef struct {
-    uint8_t repeat_values[SubBruteAttackTotalCount];
-    uint32_t last_index;
+    uint8_t repeat_values[SubBruteAttackTotalCount]; /**< Array of repeat values */
+    uint32_t last_index; /**< Last index used */
 } SubBruteSettings;
 
 /**
