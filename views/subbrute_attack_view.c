@@ -17,7 +17,6 @@ struct SubBruteAttackView {
     uint64_t max_value;
     uint64_t current_step;
     bool is_attacking;
-    // uint8_t extra_repeats;
 };
 
 typedef struct {
@@ -161,7 +160,7 @@ SubBruteAttackView* subbrute_attack_view_alloc() {
 
 void subbrute_attack_view_enter(void* context) {
     furi_assert(context);
-    SubBruteAttackView* instance = context;
+    SubBruteAttackView* instance = (SubBruteAttackView*)context;
     with_view_model(
         instance->view,
         SubBruteAttackViewModel * model,
@@ -202,8 +201,8 @@ void subbrute_attack_view_set_current_step(SubBruteAttackView* instance, uint64_
         true);
 }
 
-// We need to call init every time, because not every time we calls enter
-// normally, call enter only once
+// We need to call init every time, because not every time we call "enter"
+// normally, so call "enter" only once
 void subbrute_attack_view_init_values(
     SubBruteAttackView* instance,
     uint8_t index,

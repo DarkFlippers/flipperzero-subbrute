@@ -107,8 +107,6 @@ SubBruteState* subbrute_alloc() {
 
     instance->settings = subbrute_settings_alloc();
     subbrute_settings_load(instance->settings);
-    //instance->flipper_format = flipper_format_string_alloc();
-    //instance->environment = subghz_environment_alloc();
 
     // Uncomment to enable Debug pin output on PIN 17(1W)
     // subghz_devices_set_async_mirror_pin(instance->radio_device, &gpio_ibutton);
@@ -166,7 +164,7 @@ void subbrute_free(SubBruteState* instance) {
     view_dispatcher_remove_view(instance->view_dispatcher, SubBruteViewStack);
     view_stack_free(instance->view_stack);
 
-    //Dialog
+    // Dialog
     furi_record_close(RECORD_DIALOGS);
     instance->dialogs = NULL;
 
@@ -216,5 +214,6 @@ int32_t subbrute_app(void* p) {
     subbrute_free(instance);
 
     furi_hal_power_suppress_charge_exit();
+
     return 0;
 }

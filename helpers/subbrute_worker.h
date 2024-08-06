@@ -32,8 +32,9 @@ typedef struct SubBruteWorker SubBruteWorker;
  * This function creates a new SubBruteWorker object by allocating memory for it on the heap and
  * initializes it with the provided radio_device. The radio_device parameter must not be NULL.
  *
- * @param radio_device A pointer to a valid SubGhzDevice object.
- * @return A pointer to the newly allocated SubBruteWorker object, or NULL if memory allocation failed.
+ * @param[in] radio_device A pointer to a valid SubGhzDevice object.
+ * @return A pointer to the newly allocated SubBruteWorker object, or @c NULL if memory
+ *         allocation was failed.
  */
 SubBruteWorker* subbrute_worker_alloc(const SubGhzDevice* radio_device);
 

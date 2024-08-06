@@ -1,11 +1,12 @@
 #pragma once
 
 #include "subbrute_protocols.h"
+#include "helpers/subbrute_radio_device_loader.h"
+
 #include <lib/subghz/protocols/base.h>
 #include <lib/subghz/transmitter.h>
 #include <lib/subghz/receiver.h>
 #include <lib/subghz/environment.h>
-#include "helpers/subbrute_radio_device_loader.h"
 
 #define SUBBRUTE_MAX_LEN_NAME 64
 #define SUBBRUTE_PATH EXT_PATH("subghz")
@@ -42,33 +43,49 @@ typedef enum {
  *
  * This structure contains information and state variables required for performing
  * a SubBrute attack.
+ *
  */
 typedef struct {
-    const SubBruteProtocol* protocol_info;
-    SubBruteProtocol* file_protocol_info;
+    const SubBruteProtocol* protocol_info; /**< Protocol info */
+    SubBruteProtocol* file_protocol_info; /**< File protocol info */
 
-    // Current step
-    uint64_t current_step;
+    uint64_t current_step; /**< Current step */
 
-    // SubGhz
-    SubGhzReceiver* receiver;
-    SubGhzProtocolDecoderBase* decoder_result;
-    SubGhzEnvironment* environment;
-    const SubGhzDevice* radio_device;
+     /** @see @c SubGhz service for more info */
+    SubGhzReceiver* receiver; /**< Receiver */
+    SubGhzProtocolDecoderBase* decoder_result; /**< Decoder result */
+    SubGhzEnvironment* environment; /**< Environment */
+    const SubGhzDevice* radio_device; /**< Radio device */
 
-    // Attack state
-    SubBruteAttacks attack;
-    uint64_t max_value;
-    uint8_t extra_repeats;
+    SubBruteAttacks attack; /**< Attack state */
+    uint64_t max_value; /**< Max step */
+    uint8_t extra_repeats; /**< Extra repeats */
 
-    // Loaded info for attack type
-    uint64_t key_from_file;
-    uint64_t current_key_from_file;
-    bool two_bytes;
+    /** @brief Loaded info for the attack type */
+    uint64_t key_from_file; /**< Key from file */
+    uint64_t current_key_from_file; /**< Current key from file */
+    bool two_bytes; /**< Two bytes key */
 
-    // Index of group to bruteforce in loaded file
-    uint8_t bit_index;
+    uint8_t bit_index; /**< Index of a group to bruteforce in loaded file */
 } SubBruteDevice;
+
+/**
+ * @brief Response messages
+ * */
+static char* const error_device_ok = "OK";
+static char* const error_device_invalid_path = "invalid name/path";
+static char* const error_device_missing_header = "Missing or incorrect header";
+static char* const error_device_invalid_frequency = "Invalid frequency!";
+static char* const error_device_incorrect_frequency = "Missing or incorrect Frequency";
+static char* const error_device_preset_fail = "Preset FAIL";
+static char* const error_device_missing_protocol = "Missing Protocol";
+static char* const error_device_protocol_unsupported = "Protocol unsupported";
+static char* const error_device_dynamic_protocol_unsupported = "Dynamic protocol unsupported";
+static char* const error_device_protocol_not_found = "Protocol not found";
+static char* const error_device_missing_bit = "Missing or incorrect Bit";
+static char* const error_device_missing_key = "Missing or incorrect Key";
+static char* const error_device_missing_te = "Missing or incorrect TE";
+static char* const error_device_unknown = "Unknown error";
 
 /**
  * @brief Allocates memory for a SubBruteDevice structure.
@@ -76,7 +93,7 @@ typedef struct {
  * This function allocates memory for a SubBruteDevice structure and
  * initializes it using the given SubGhzDevice.
  *
- * @param radio_device The SubGhzDevice used to initialize the SubBruteDevice.
+ * @param[in] radio_device The SubGhzDevice used to initialize the SubBruteDevice.
  * @return A pointer to the allocated SubBruteDevice structure.
  */
 SubBruteDevice* subbrute_device_alloc(const SubGhzDevice* radio_device);
@@ -87,7 +104,8 @@ SubBruteDevice* subbrute_device_alloc(const SubGhzDevice* radio_device);
  * This function frees the memory allocated for a SubBruteDevice instance.
  * After calling this function, the instance is no longer valid and should not be used.
  *
- * @param instance Pointer to the SubBruteDevice instance to be freed.
+ * @param[out] instance Pointer to the SubBruteDevice instance to be freed.
+ *
  */
 void subbrute_device_free(SubBruteDevice* instance);
 
