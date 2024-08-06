@@ -1,4 +1,5 @@
 #include "subbrute_worker_private.h"
+#include <furi.h>
 #include <string.h>
 #include <toolbox/stream/stream.h>
 #include <flipper_format.h>
