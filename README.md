@@ -1,9 +1,9 @@
-# SubGHz Bruteforcer Application for Flipper Zero
+# SubGHz BruteForcer Application for Flipper Zero
 
 ![image](https://github.com/DarkFlippers/flipperzero-subbrute/assets/31771569/0a952559-94c0-40b7-8b9c-9ee4e37c6cd6)
 
 
-SubGhz Bruteforcer from [Unleashed Firmware](https://github.com/DarkFlippers/unleashed-firmware)
+SubGhz BruteForcer from [Unleashed Firmware](https://github.com/DarkFlippers/unleashed-firmware)
 
 ## Disclaimer
 
@@ -21,8 +21,8 @@ You can also download the [release](https://github.com/derskythe/flipperzero-sub
 <br />
 > [!WARNING]
 >
-> The application is not compatible with the official firmware version.
-> Also, it has not been tested on other firmware versions other than [Unleashed Firmware](https://github.com/DarkFlippers/unleashed-firmware) and [OFW](https://github.com/flipperdevices/flipperzero-firmware).
+> The application has not been tested on other firmware versions other than [Unleashed Firmware](https://github.com/DarkFlippers/unleashed-firmware)
+> and [OFW](https://github.com/flipperdevices/flipperzero-firmware).
 
 ---
 
@@ -33,12 +33,12 @@ You can also download the [release](https://github.com/derskythe/flipperzero-sub
 ![image](https://github.com/DarkFlippers/flipperzero-subbrute/assets/31771569/9f428d6e-59fd-4517-895d-fb185f8d884f)
 
 <p>Here you can select the protocol and frequency that will be used for bruteforce.</p>
-<p>According to our observations, `CAME 12bit 433MHz` is the most common protocol, so it is selected by default.
-To identify other devices and protocols, you should inspect the device.</p>
-<p>According to the protocol, when probe a key, each value is sent 3 times.</p>
-<p>Most of the devices this works but there are devices that don't work and more repetitions are needed.</p>
+<p>According to our observations, <code>CAME 12bit 433MHz</code> is the most common protocol, so it is selected by default.</p>
+<p></p>To identify other devices and protocols you should inspect the device.</p>
+<p>According to the protocol, when probe a key, each value is sent 3 times.
+For most of the devices this works but there are devices that don't work and more repetitions are needed.</p>
 <p>The number of repetitions can be increased with the right button, the left button decreases the value.</p>
-<p>The negative side of increasing the number of repetitions will be a longer key find time.</p>
+<p>But negative side of increasing the number of repetitions will be a longer key find time.</p>
 
 ![image](https://github.com/DarkFlippers/flipperzero-subbrute/assets/31771569/a17695d0-833d-44ce-a0d0-ead8366cb4fe)
 
@@ -114,7 +114,7 @@ To identify other devices and protocols, you should inspect the device.</p>
 
 > [!NOTE]
 >
-> Only dip switch combinations, not full 25bit bruteforce
+> Only DIP switch combinations, not full 25bit bruteforce
 
 - UNILARM 25bit 330MHz (TE: 209μs)
 - UNILARM 25bit 433MHz (TE: 209μs)
@@ -123,7 +123,7 @@ To identify other devices and protocols, you should inspect the device.</p>
 
 > [!NOTE]
 >
-> Only dip switch combinations, not full 25bit bruteforce
+> Only DIP switch combinations, not full 25bit bruteforce
 
 - SMC5326 25bit 330MHz (TE: 320μs)
 - SMC5326 25bit 433MHz (TE: 320μs)
@@ -132,7 +132,7 @@ To identify other devices and protocols, you should inspect the device.</p>
 
 > [!NOTE]
 >
-> Only for 8 dip switch remote, not full 24bit bruteforce
+> Only for 8 DIP switch remote, not full 24bit bruteforce
 
 - PT2260 24bit 315MHz (TE: 286μs)
 - PT2260 24bit 330MHz (TE: 286μs)
