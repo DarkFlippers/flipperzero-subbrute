@@ -335,7 +335,7 @@ uint8_t subbrute_device_load_from_file(SubBruteDevice* instance, const char* fil
         for(size_t i = 0; i < sizeof(uint64_t); i++) {
             data = (data << 8) | key_data[i];
         }
-#if FURI_DEBUG
+#ifdef FURI_DEBUG
         FURI_LOG_D(TAG, "Key: %.16llX", data);
 #endif
         instance->key_from_file = data;

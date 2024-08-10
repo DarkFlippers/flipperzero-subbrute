@@ -236,7 +236,7 @@ bool subbrute_worker_transmit_current_key(SubBruteWorker* instance, uint64_t ste
 
     uint32_t ticks = furi_get_tick();
     if((ticks - instance->last_time_tx_data) < SUBBRUTE_MANUAL_TRANSMIT_INTERVAL) {
-#if FURI_DEBUG
+#ifdef FURI_DEBUG
         FURI_LOG_D(TAG, "Need to wait, current: %ld", ticks - instance->last_time_tx_data);
 #endif
         return false;
@@ -270,7 +270,7 @@ bool subbrute_worker_transmit_current_key(SubBruteWorker* instance, uint64_t ste
     subbrute_worker_subghz_transmit(instance, flipper_format);
 
     result = true;
-#if FURI_DEBUG
+#ifdef FURI_DEBUG
     FURI_LOG_D(TAG, "Manual transmit done");
 #endif
 
