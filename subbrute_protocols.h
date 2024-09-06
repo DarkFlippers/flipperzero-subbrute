@@ -60,6 +60,7 @@ typedef enum {
     LegrandFileProtocol,
     HollarmileProtocol,
     GangQiFileProtocol,
+    Marantec24FileProtocol,
     UnknownFileProtocol,
     TotalFileProtocol,
 } SubBruteFileProtocol;
