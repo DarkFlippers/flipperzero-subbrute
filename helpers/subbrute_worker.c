@@ -6,8 +6,8 @@
 #include <flipper_format_i.h>
 #include <lib/subghz/subghz_protocol_registry.h>
 
-#define TAG "SubBruteWorker"
-#define SUBBRUTE_TX_TIMEOUT 6
+#define TAG                               "SubBruteWorker"
+#define SUBBRUTE_TX_TIMEOUT               6
 #define SUBBRUTE_MANUAL_TRANSMIT_INTERVAL 250
 
 SubBruteWorker* subbrute_worker_alloc(const SubGhzDevice* radio_device) {
@@ -80,6 +80,34 @@ bool subbrute_worker_set_step(SubBruteWorker* instance, uint64_t step) {
     instance->step = step;
 
     return true;
+}
+
+bool subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
+    furi_assert(instance);
+    if(!subbrute_worker_can_manual_transmit(instance)) {
+        FURI_LOG_W(TAG, "Cannot set opencode during running mode");
+
+        return false;
+    }
+
+    instance->opencode = opencode;
+
+    return true;
+}
+
+uint8_t subbrute_worker_get_opencode(SubBruteWorker* instance) {
+    return instance->opencode;
+}
+
+bool subbrute_worker_get_is_pt2262(SubBruteWorker* instance) {
+    if(instance->attack == SubBruteAttackPT226224bit315 ||
+       instance->attack == SubBruteAttackPT226224bit418 ||
+       instance->attack == SubBruteAttackPT226224bit430 ||
+       instance->attack == SubBruteAttackPT226224bit433) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool subbrute_worker_init_default_attack(
@@ -207,7 +235,6 @@ void subbrute_worker_stop(SubBruteWorker* instance) {
     furi_assert(instance);
 
     if(!instance->worker_running) {
-
         return;
     }
 
@@ -264,7 +291,13 @@ bool subbrute_worker_transmit_current_key(SubBruteWorker* instance, uint64_t ste
             instance->two_bytes);
     } else {
         subbrute_protocol_default_payload(
-            stream, instance->file, step, instance->bits, instance->te, instance->repeat);
+            stream,
+            instance->file,
+            step,
+            instance->bits,
+            instance->te,
+            instance->repeat,
+            instance->opencode);
     }
 
     subbrute_worker_subghz_transmit(instance, flipper_format);
@@ -402,7 +435,8 @@ int32_t subbrute_worker_thread(void* context) {
                 instance->step,
                 instance->bits,
                 instance->te,
-                instance->repeat);
+                instance->repeat,
+                instance->opencode);
         }
 #ifdef FURI_DEBUG
         //FURI_LOG_I(TAG, "Payload: %s", furi_string_get_cstr(payload));

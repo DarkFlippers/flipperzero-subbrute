@@ -1,11 +1,30 @@
+// This file is autogeneated by the ufbt.
+// You can modify it, and it will not be overwritten if exists.
+// Some paths are absolute, and will need to be updated if you move the project.
+// To regenerate the file, delete it and run `ufbt vscode_dist` again.
 {
-    "githubPullRequests.ignoredPullRequestBranches": [
-        "master"
-    ],
-    "workbench.colorCustomizations": {
-        "list.errorForeground": "#00AA00",
-        "list.warningForeground": "#00d9ff",
-        "gitDecoration.modifiedResourceForeground": "#00ffb3",
-        "gitDecoration.untrackedResourceForeground": "#f7aeae"
-    }
+    "cortex-debug.enableTelemetry": false,
+    "cortex-debug.variableUseNaturalFormat": false,
+    "cortex-debug.armToolchainPath": "/Users/spensercai/.ufbt/toolchain/arm64-darwin/bin",
+    "cortex-debug.openocdPath": "/Users/spensercai/.ufbt/toolchain/arm64-darwin/bin/openocd",
+    "cortex-debug.gdbPath": "/Users/spensercai/.ufbt/toolchain/arm64-darwin/bin/arm-none-eabi-gdb-py3",
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.scons": "python",
+        "SConscript": "python",
+        "SConstruct": "python",
+        "*.fam": "python",
+        "subbrute_i.h": "c"
+    },
+    "python.analysis.typeCheckingMode": "off",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "clangd.path": "/Users/spensercai/.ufbt/toolchain/arm64-darwin/bin/clangd",
+    "clangd.arguments": [
+        "--query-driver=**/arm-none-eabi-*",
+        "--compile-commands-dir=${workspaceFolder}/.vscode",
+        "--clang-tidy",
+        "--header-insertion=never"
+    ]
 }

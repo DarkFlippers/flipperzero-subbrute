@@ -3,17 +3,18 @@
 
 #define TAG "SubBruteSceneLoadFile"
 
-#define MIN_TD 0
-#define MAX_TD 255
+#define MIN_TD  0
+#define MAX_TD  255
 #define MIN_REP 1
 #define MAX_REP 100
-#define MIN_TE 100
-#define MAX_TE 600
+#define MIN_TE  100
+#define MAX_TE  600
 
 enum SubBruteVarListIndex {
     SubBruteVarListIndexTimeDelay,
     SubBruteVarListIndexRepeatOrOnExtra,
     SubBruteVarListIndexTe,
+    SubBruteVarListIndexOpenCode,
 };
 
 static void setup_extra_enter_callback(void* context, uint32_t index);
@@ -180,6 +181,18 @@ static void setup_extra_te_callback(VariableItem* item) {
     }
 }
 
+const char* const opencode_names[] = {"0001", "0010", "0100", "1000"};
+const uint8_t opencode_values[COUNT_OF(opencode_names)] = {0, 1, 2, 3};
+
+static void setup_extra_opencode_callback(VariableItem* item) {
+    furi_assert(item);
+    SubBruteState* instance = variable_item_get_context(item);
+    furi_assert(instance);
+    const uint8_t value_index = variable_item_get_current_value_index(item);
+    variable_item_set_current_value_text(item, opencode_names[value_index]);
+    subbrute_worker_set_opencode(instance->worker, opencode_values[value_index]);
+}
+
 static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bool on_extra) {
     furi_assert(instance);
     char str[6] = {0};
@@ -242,6 +255,14 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
                 variable_item_set_current_value_index(item, 1);
                 break;
             }
+        }
+        if(subbrute_worker_get_is_pt2262(instance->worker)) {
+            item = variable_item_list_add(
+                var_list, "PT2262Code", 4, setup_extra_opencode_callback, instance);
+            variable_item_set_current_value_index(
+                item, subbrute_worker_get_opencode(instance->worker));
+            variable_item_set_current_value_text(
+                item, opencode_names[subbrute_worker_get_opencode(instance->worker)]);
         }
     } else {
         item = variable_item_list_add(var_list, "Show Extra", 0, NULL, NULL);
