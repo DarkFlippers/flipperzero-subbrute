@@ -469,7 +469,7 @@ const SubBruteProtocol subbrute_protocol_holtek_12bit_am_915 = {
  * BF existing dump
  */
 const SubBruteProtocol subbrute_protocol_load_file =
-    {0, 0, 0, 3, FuriHalSubGhzPresetOok650Async, UnknownFileProtocol};
+    {0, 0, 0, 3, 0, FuriHalSubGhzPresetOok650Async, UnknownFileProtocol};
 
 static const char* subbrute_protocol_names[] = {
     [SubBruteAttackCAME12bit303] = "CAME 12bit 303MHz",
