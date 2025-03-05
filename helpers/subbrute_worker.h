@@ -276,7 +276,7 @@ void subbrute_worker_set_te(SubBruteWorker* instance, uint32_t te);
   */
 bool subbrute_worker_is_tx_allowed(SubBruteWorker* instance, uint32_t value);
 
-void subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode);
+bool subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode);
 
 uint8_t subbrute_worker_get_opencode(SubBruteWorker* instance);
 

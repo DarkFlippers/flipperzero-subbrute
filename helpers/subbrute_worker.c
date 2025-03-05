@@ -82,17 +82,17 @@ bool subbrute_worker_set_step(SubBruteWorker* instance, uint64_t step) {
     return true;
 }
 
-void subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
-    // furi_assert(instance);
-    // if(!subbrute_worker_can_manual_transmit(instance)) {
-    //     FURI_LOG_W(TAG, "Cannot set opencode during running mode");
-    //
-    //     return false;
-    // }
+bool subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
+    furi_assert(instance);
+    if(!subbrute_worker_can_manual_transmit(instance)) {
+        FURI_LOG_W(TAG, "Cannot set opencode during running mode");
+
+        return false;
+    }
 
     instance->opencode = opencode;
 
-    // return true;
+    return true;
 }
 
 uint8_t subbrute_worker_get_opencode(SubBruteWorker* instance) {
@@ -130,6 +130,7 @@ bool subbrute_worker_init_default_attack(
     instance->step = step;
     instance->bits = protocol->bits;
     instance->te = protocol->te;
+    instance->opencode = protocol->opencode;
     instance->repeat = repeats;
     instance->load_index = 0;
     instance->file_key = 0;

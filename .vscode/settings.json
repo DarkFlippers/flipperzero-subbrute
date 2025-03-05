@@ -13,8 +13,7 @@
         "*.scons": "python",
         "SConscript": "python",
         "SConstruct": "python",
-        "*.fam": "python",
-        "subbrute_i.h": "c"
+        "*.fam": "python"
     },
     "python.analysis.typeCheckingMode": "off",
     "[python]": {

@@ -190,8 +190,8 @@ static void setup_extra_opencode_callback(VariableItem* item) {
     SubBruteState* instance = variable_item_get_context(item);
     furi_assert(instance);
     const uint8_t value_index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, opencode_names[value_index]);
     subbrute_worker_set_opencode(instance->worker, opencode_values[value_index]);
+    variable_item_set_current_value_text(item, opencode_names[value_index]);
 }
 
 static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bool on_extra) {
@@ -258,12 +258,12 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
             }
         }
         if(subbrute_worker_get_is_pt2262(instance->worker)) {
+            uint8_t value_index;
             item = variable_item_list_add(
                 var_list, "PT2262Code", 9, setup_extra_opencode_callback, instance);
-            variable_item_set_current_value_index(
-                item, subbrute_worker_get_opencode(instance->worker));
-            variable_item_set_current_value_text(
-                item, opencode_names[subbrute_worker_get_opencode(instance->worker)]);
+            value_index = subbrute_worker_get_opencode(instance->worker);
+            variable_item_set_current_value_index(item, value_index);
+            variable_item_set_current_value_text(item, opencode_names[value_index]);
         }
     } else {
         item = variable_item_list_add(var_list, "Show Extra", 0, NULL, NULL);
