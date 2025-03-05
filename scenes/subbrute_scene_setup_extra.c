@@ -259,7 +259,7 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
         }
         if(subbrute_worker_get_is_pt2262(instance->worker)) {
             item = variable_item_list_add(
-                var_list, "PT2262Code", 4, setup_extra_opencode_callback, instance);
+                var_list, "PT2262Code", 9, setup_extra_opencode_callback, instance);
             variable_item_set_current_value_index(
                 item, subbrute_worker_get_opencode(instance->worker));
             variable_item_set_current_value_text(
