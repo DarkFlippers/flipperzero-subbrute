@@ -624,8 +624,6 @@ const uint64_t gate_pt2260 = 0x03; // 11
 //const uint8_t button_stop = 0x30; // 110000
 //const uint8_t button_close = 0xC0; // 11000000
 
-uint64_t gate_pt2262 = 0x03; // 11
-
 const uint64_t gate_uni_alarm = 3 << 7;
 //const uint8_t gate2 = 3 << 5;
 
@@ -750,6 +748,7 @@ void subbrute_protocol_create_candidate_for_default(
             p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;
         }
     } else if(file == PT2262FileProtocol) {
+        uint64_t gate_pt2262 = 0x03; // 11
         uint8_t opencode_var = opencode;
         if(opencode_var == 0) {
             gate_pt2262 = 0x03; // 0001 PT2262常见抬杆码3
