@@ -82,17 +82,17 @@ bool subbrute_worker_set_step(SubBruteWorker* instance, uint64_t step) {
     return true;
 }
 
-bool subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
-    furi_assert(instance);
-    if(!subbrute_worker_can_manual_transmit(instance)) {
-        FURI_LOG_W(TAG, "Cannot set opencode during running mode");
-
-        return false;
-    }
+void subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
+    // furi_assert(instance);
+    // if(!subbrute_worker_can_manual_transmit(instance)) {
+    //     FURI_LOG_W(TAG, "Cannot set opencode during running mode");
+    //
+    //     return false;
+    // }
 
     instance->opencode = opencode;
 
-    return true;
+    // return true;
 }
 
 uint8_t subbrute_worker_get_opencode(SubBruteWorker* instance) {

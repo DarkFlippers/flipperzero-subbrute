@@ -257,6 +257,7 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
                 break;
             }
         }
+
         if(subbrute_worker_get_is_pt2262(instance->worker)) {
             uint8_t value_index;
             item = variable_item_list_add(
