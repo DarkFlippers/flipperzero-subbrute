@@ -763,6 +763,21 @@ void subbrute_protocol_create_candidate_for_default(
         if(opencode_var == 3) {
             gate_pt2262 = 0xC0; // 1000 PT2262常见抬杆码192
         }
+        if(opencode_var == 4) {
+            gate_pt2262 = 0xF0; // 1100 PT2262常见抬杆码240
+        }
+        if(opencode_var == 5) {
+            gate_pt2262 = 0x10; // 0F00 PT2262常见抬杆码16
+        }
+        if(opencode_var == 6) {
+            gate_pt2262 = 0x04; // 00F0 PT2262常见抬杆码4
+        }
+        if(opencode_var == 7) {
+            gate_pt2262 = 0x40; // F000 PT2262常见抬杆码64
+        }
+        if(opencode_var == 8) {
+            gate_pt2262 = 0xC3; // 1001 PT2262常见抬杆码195
+        }
         for(size_t j = 0; j < 8; j++) {
             total |= lut_pt2262[step % 3] << (2 * j);
             double sub_step = (double)step / 3;

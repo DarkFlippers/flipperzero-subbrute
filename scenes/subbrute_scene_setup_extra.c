@@ -181,8 +181,9 @@ static void setup_extra_te_callback(VariableItem* item) {
     }
 }
 
-const char* const opencode_names[] = {"0001", "0010", "0100", "1000"};
-const uint8_t opencode_values[COUNT_OF(opencode_names)] = {0, 1, 2, 3};
+const char* const opencode_names[] =
+    {"0001", "0010", "0100", "1000", "1100", "0F00", "00F0", "F000", "1001"};
+const uint8_t opencode_values[COUNT_OF(opencode_names)] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
 static void setup_extra_opencode_callback(VariableItem* item) {
     furi_assert(item);
