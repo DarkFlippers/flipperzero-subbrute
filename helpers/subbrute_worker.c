@@ -383,6 +383,10 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
     instance->transmitter = NULL;
 
     instance->transmit_mode = false;
+
+    // 清理flipper_format的stream
+    Stream* stream = flipper_format_get_raw_stream(flipper_format);
+    stream_clean(stream);
 }
 
 void subbrute_worker_send_callback(SubBruteWorker* instance) {
