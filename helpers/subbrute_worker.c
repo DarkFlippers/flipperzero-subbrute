@@ -350,10 +350,16 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
         subghz_transmitter_free(instance->transmitter);
         instance->transmitter = NULL;
     }
-    instance->transmitter =
-        subghz_transmitter_alloc_init(instance->environment, instance->protocol_name);
-    subghz_transmitter_deserialize(instance->transmitter, flipper_format);
 
+    instance->protocol_name = subbrute_protocol_file(instance->file);
+    FURI_LOG_W(TAG, "Protocol name: %s", instance->protocol_name);
+
+    SubGhzEnvironment* environment = subghz_environment_alloc();
+    subghz_environment_set_protocol_registry(environment, (void*)&subghz_protocol_registry);
+
+    instance->transmitter = subghz_transmitter_alloc_init(environment, instance->protocol_name);
+
+    subghz_transmitter_deserialize(instance->transmitter, flipper_format);
     subghz_devices_reset(instance->radio_device);
     subghz_devices_idle(instance->radio_device);
     subghz_devices_load_preset(instance->radio_device, instance->preset, NULL);
@@ -373,6 +379,7 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
 
     subghz_transmitter_stop(instance->transmitter);
     subghz_transmitter_free(instance->transmitter);
+    subghz_environment_free(environment);
     instance->transmitter = NULL;
 
     instance->transmit_mode = false;

@@ -55,9 +55,9 @@ void subbrute_scene_setup_attack_on_enter(void* context) {
 
 void subbrute_scene_setup_attack_on_exit(void* context) {
     furi_assert(context);
-#ifdef FURI_DEBUG
-    FURI_LOG_D(TAG, "subbrute_scene_setup_attack_on_exit");
-#endif
+    // #ifdef FURI_DEBUG
+    FURI_LOG_W(TAG, "subbrute_scene_setup_attack_on_exit");
+    // #endif
     SubBruteState* instance = (SubBruteState*)context;
     subbrute_worker_stop(instance->worker);
     notification_message(instance->notifications, &sequence_blink_stop);

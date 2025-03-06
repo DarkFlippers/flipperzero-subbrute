@@ -786,7 +786,7 @@ void subbrute_protocol_create_candidate_for_default(
         total |= gate_pt2262;
 
         for(int i = 0; i < 8; i++) {
-            p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFF;
+            p[i] = (uint8_t)(total >> 8 * (7 - i)) & 0xFFU;
         }
     } else {
         for(int i = 0; i < 8; i++) {

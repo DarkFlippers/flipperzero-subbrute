@@ -30,7 +30,11 @@ void subbrute_device_free(SubBruteDevice* instance) {
     furi_assert(instance);
 
     // I don't know how to free this
-    instance->decoder_result = NULL;
+    // instance->decoder_result = NULL;
+    if(instance->decoder_result != NULL) {
+        free(instance->decoder_result);
+        instance->decoder_result = NULL;
+    }
 
     if(instance->receiver != NULL) {
         subghz_receiver_free(instance->receiver);

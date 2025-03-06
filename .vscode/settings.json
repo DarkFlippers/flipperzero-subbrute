@@ -13,7 +13,8 @@
         "*.scons": "python",
         "SConscript": "python",
         "SConstruct": "python",
-        "*.fam": "python"
+        "*.fam": "python",
+        "stream.h": "c"
     },
     "python.analysis.typeCheckingMode": "off",
     "[python]": {
