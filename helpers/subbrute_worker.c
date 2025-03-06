@@ -19,6 +19,7 @@ SubBruteWorker* subbrute_worker_alloc(const SubGhzDevice* radio_device) {
     instance->initiated = false;
     instance->last_time_tx_data = 0;
     instance->load_index = 0;
+    instance->opencode = 0;
 
     instance->thread = furi_thread_alloc();
     furi_thread_set_name(instance->thread, "SubBruteAttackWorker");
@@ -89,7 +90,6 @@ void subbrute_worker_set_opencode(SubBruteWorker* instance, uint8_t opencode) {
     //
     //     return false;
     // }
-
     instance->opencode = opencode;
 
     // return true;

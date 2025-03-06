@@ -9,8 +9,8 @@
 #include <lib/subghz/environment.h>
 
 #define SUBBRUTE_MAX_LEN_NAME 64
-#define SUBBRUTE_PATH EXT_PATH("subghz")
-#define SUBBRUTE_FILE_EXT ".sub"
+#define SUBBRUTE_PATH         EXT_PATH("subghz")
+#define SUBBRUTE_FILE_EXT     ".sub"
 
 /**
  * @enum SubBruteFileResult
@@ -51,7 +51,7 @@ typedef struct {
 
     uint64_t current_step; /**< Current step */
 
-     /** @see @c SubGhz service for more info */
+    /** @see @c SubGhz service for more info */
     SubGhzReceiver* receiver; /**< Receiver */
     SubGhzProtocolDecoderBase* decoder_result; /**< Decoder result */
     SubGhzEnvironment* environment; /**< Environment */
@@ -65,7 +65,7 @@ typedef struct {
     uint64_t key_from_file; /**< Key from file */
     uint64_t current_key_from_file; /**< Current key from file */
     bool two_bytes; /**< Two bytes key */
-
+    uint8_t opencode; /**< Opencode */
     uint8_t bit_index; /**< Index of a group to bruteforce in loaded file */
 } SubBruteDevice;
 

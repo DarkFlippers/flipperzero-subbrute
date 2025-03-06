@@ -191,6 +191,7 @@ static void setup_extra_opencode_callback(VariableItem* item) {
     furi_assert(instance);
     const uint8_t value_index = variable_item_get_current_value_index(item);
     subbrute_worker_set_opencode(instance->worker, opencode_values[value_index]);
+    instance->device->opencode = opencode_values[value_index];
     variable_item_set_current_value_text(item, opencode_names[value_index]);
 }
 
