@@ -305,9 +305,8 @@ bool subbrute_worker_transmit_current_key(SubBruteWorker* instance, uint64_t ste
 
     result = true;
 #ifdef FURI_DEBUG
-    FURI_LOG_D(TAG, "Manual transmit done");
+    FURI_LOG_W(TAG, "Manual transmit done");
 #endif
-
     flipper_format_free(flipper_format);
 
     return result;
@@ -354,19 +353,28 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
     instance->protocol_name = subbrute_protocol_file(instance->file);
     FURI_LOG_W(TAG, "Protocol name: %s", instance->protocol_name);
 
-    SubGhzEnvironment* environment = subghz_environment_alloc();
-    subghz_environment_set_protocol_registry(environment, (void*)&subghz_protocol_registry);
+    // TEST DEBUG
+    Stream* stream = flipper_format_get_raw_stream(flipper_format);
+    stream_rewind(stream);
+    test_read_full_stream(stream, "Before 1");
+    // END TEST DEBUG
 
-    instance->transmitter = subghz_transmitter_alloc_init(environment, instance->protocol_name);
-
-    subghz_transmitter_deserialize(instance->transmitter, flipper_format);
     subghz_devices_reset(instance->radio_device);
     subghz_devices_idle(instance->radio_device);
     subghz_devices_load_preset(instance->radio_device, instance->preset, NULL);
+    stream_rewind(stream);
+    test_read_full_stream(stream, "Before 2");
     subghz_devices_set_frequency(
         instance->radio_device, instance->frequency); // TODO is freq valid check
 
     if(subghz_devices_set_tx(instance->radio_device)) {
+        stream_rewind(stream);
+        test_read_full_stream(stream, "Before 3");
+        instance->transmitter =
+            subghz_transmitter_alloc_init(instance->environment, instance->protocol_name);
+        subghz_transmitter_deserialize(instance->transmitter, flipper_format);
+        stream_rewind(stream);
+        test_read_full_stream(stream, "After 0");
         subghz_devices_start_async_tx(
             instance->radio_device, subghz_transmitter_yield, instance->transmitter);
         while(!subghz_devices_is_async_complete_tx(instance->radio_device)) {
@@ -379,13 +387,15 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
 
     subghz_transmitter_stop(instance->transmitter);
     subghz_transmitter_free(instance->transmitter);
-    subghz_environment_free(environment);
     instance->transmitter = NULL;
 
     instance->transmit_mode = false;
 
-    // 清理flipper_format的stream
-    Stream* stream = flipper_format_get_raw_stream(flipper_format);
+    // TEST DEBUG
+    // Stream* stream = flipper_format_get_raw_stream(flipper_format);
+    stream_rewind(stream);
+    test_read_full_stream(stream, "After 1");
+    // END TEST DEBUG
     stream_clean(stream);
 }
 
@@ -470,6 +480,9 @@ int32_t subbrute_worker_thread(void* context) {
         furi_delay_ms(instance->tx_timeout_ms);
     }
 
+    // TEST DEBUG
+    FURI_LOG_W(TAG, "subbrute_worker_thread flipper_format_free");
+    // END TEST DEBUG
     flipper_format_free(flipper_format);
 
     instance->worker_running = false; // Because we have error states
@@ -521,4 +534,20 @@ bool subbrute_worker_is_tx_allowed(SubBruteWorker* instance, uint32_t value) {
     }
 
     return res;
+}
+
+void test_read_full_stream(Stream* stream, const char* msg) {
+    // read data
+    // 循环读取stream中的数据每次读取一个字节（uint8_t）
+    size_t size_2 = stream_size(stream);
+    // read data
+    // 循环读取stream中的数据每次读取一个字节（uint8_t）
+    char* data_2 = (char*)malloc(size_2 + 1);
+    for(size_t i = 0; i < size_2; i++) {
+        stream_read(stream, (uint8_t*)&data_2[i], 1);
+    }
+    data_2[size_2] = '\0';
+
+    FURI_LOG_W(TAG, "%s Transmit data: %s", msg, data_2);
+    free(data_2);
 }
