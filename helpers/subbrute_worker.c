@@ -105,6 +105,7 @@ bool subbrute_worker_get_is_pt2262(SubBruteWorker* instance) {
     if(instance->attack == SubBruteAttackPT226224bit315 ||
        instance->attack == SubBruteAttackPT226224bit418 ||
        instance->attack == SubBruteAttackPT226224bit430 ||
+       instance->attack == SubBruteAttackPT226224bit4305 ||
        instance->attack == SubBruteAttackPT226224bit433) {
         return true;
     } else {

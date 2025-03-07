@@ -400,6 +400,19 @@ const SubBruteProtocol subbrute_protocol_pt2262_24bit_430 = {
     .file = PT2262FileProtocol};
 
 /**
+ * PT2262 (Princeton) 24bit 430.5MHz
+ *
+ * 
+ */
+const SubBruteProtocol subbrute_protocol_pt2262_24bit_430_5 = {
+    .frequency = 430500000,
+    .bits = 24,
+    .te = 350,
+    .repeat = 4,
+    .preset = FuriHalSubGhzPresetOok650Async,
+    .file = PT2262FileProtocol};
+
+/**
  * PT2262 (Princeton) 24bit 433MHz
  */
 const SubBruteProtocol subbrute_protocol_pt2262_24bit_433 = {
@@ -513,6 +526,7 @@ static const char* subbrute_protocol_names[] = {
     [SubBruteAttackPT226224bit315] = "PT2262 24bit 315MHz",
     [SubBruteAttackPT226224bit418] = "PT2262 24bit 418MHz",
     [SubBruteAttackPT226224bit430] = "PT2262 24bit 430MHz",
+    [SubBruteAttackPT226224bit4305] = "PT2262 24bit 430.5MHz",
     [SubBruteAttackPT226224bit433] = "PT2262 24bit 433MHz",
     [SubBruteAttackLoadFile] = "BF existing dump",
     [SubBruteAttackTotalCount] = "Total Count",
@@ -570,6 +584,7 @@ const SubBruteProtocol* subbrute_protocol_registry[] = {
     [SubBruteAttackPT226224bit315] = &subbrute_protocol_pt2262_24bit_315,
     [SubBruteAttackPT226224bit418] = &subbrute_protocol_pt2262_24bit_418,
     [SubBruteAttackPT226224bit430] = &subbrute_protocol_pt2262_24bit_430,
+    [SubBruteAttackPT226224bit4305] = &subbrute_protocol_pt2262_24bit_430_5,
     [SubBruteAttackPT226224bit433] = &subbrute_protocol_pt2262_24bit_433,
     [SubBruteAttackLoadFile] = &subbrute_protocol_load_file};
 
@@ -988,6 +1003,7 @@ uint64_t
         attack_type == SubBruteAttackPT226224bit315 ||
         attack_type == SubBruteAttackPT226224bit418 ||
         attack_type == SubBruteAttackPT226224bit430 ||
+        attack_type == SubBruteAttackPT226224bit4305 ||
         attack_type == SubBruteAttackPT226224bit433) {
         max_value = 6561;
     } else {
