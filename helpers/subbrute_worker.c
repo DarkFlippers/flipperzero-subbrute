@@ -352,7 +352,11 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
         instance->transmitter = NULL;
     }
 
-    instance->protocol_name = subbrute_protocol_file(instance->file);
+    // instance->protocol_name = subbrute_protocol_file(instance->file);
+
+    instance->transmitter =
+        subghz_transmitter_alloc_init(instance->environment, instance->protocol_name);
+    subghz_transmitter_deserialize(instance->transmitter, flipper_format);
 
     subghz_devices_reset(instance->radio_device);
     subghz_devices_idle(instance->radio_device);
@@ -361,9 +365,6 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
         instance->radio_device, instance->frequency); // TODO is freq valid check
 
     if(subghz_devices_set_tx(instance->radio_device)) {
-        instance->transmitter =
-            subghz_transmitter_alloc_init(instance->environment, instance->protocol_name);
-        subghz_transmitter_deserialize(instance->transmitter, flipper_format);
         subghz_devices_start_async_tx(
             instance->radio_device, subghz_transmitter_yield, instance->transmitter);
         while(!subghz_devices_is_async_complete_tx(instance->radio_device)) {
@@ -379,6 +380,10 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
     instance->transmitter = NULL;
 
     instance->transmit_mode = false;
+
+    Stream* stream = flipper_format_get_raw_stream(flipper_format);
+    stream_rewind(stream);
+    test_read_full_stream(stream, "Transmit data");
 
     subghz_custom_btns_reset();
 }
