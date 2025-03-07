@@ -824,7 +824,7 @@ void subbrute_protocol_default_payload(
     subbrute_protocol_create_candidate_for_default(candidate, file, step, opencode);
 
 #ifdef FURI_DEBUG
-    FURI_LOG_W(
+    FURI_LOG_D(
         TAG,
         "candidate: %s, step: %lld, repeat: %d, te: %s",
         furi_string_get_cstr(candidate),

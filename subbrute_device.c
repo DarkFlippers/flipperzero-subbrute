@@ -82,10 +82,10 @@ uint64_t subbrute_device_add_step(SubBruteDevice* instance, int8_t step) {
 bool subbrute_device_save_file(SubBruteDevice* instance, const char* dev_file_name) {
     furi_assert(instance);
 
-    // #ifdef FURI_DEBUG
-    FURI_LOG_W(TAG, "subbrute_device_save_file: %s", dev_file_name);
-    FURI_LOG_W(TAG, "opencode: %d", instance->opencode);
-    // #endif
+#ifdef FURI_DEBUG
+    FURI_LOG_D(TAG, "subbrute_device_save_file: %s", dev_file_name);
+    FURI_LOG_D(TAG, "opencode: %d", instance->opencode);
+#endif
 
     Storage* storage = furi_record_open(RECORD_STORAGE);
     FlipperFormat* file = flipper_format_file_alloc(storage);
