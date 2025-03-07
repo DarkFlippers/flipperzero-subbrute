@@ -823,7 +823,7 @@ void subbrute_protocol_default_payload(
     FuriString* candidate = furi_string_alloc();
     subbrute_protocol_create_candidate_for_default(candidate, file, step, opencode);
 
-    //#ifdef FURI_DEBUG
+#ifdef FURI_DEBUG
     FURI_LOG_W(
         TAG,
         "candidate: %s, step: %lld, repeat: %d, te: %s",
@@ -831,7 +831,7 @@ void subbrute_protocol_default_payload(
         step,
         repeat,
         te ? "true" : "false");
-    //#endif
+#endif
     stream_clean(stream);
     if(te) {
         stream_write_format(
@@ -901,9 +901,9 @@ void subbrute_protocol_default_generate_file(
     FuriString* candidate = furi_string_alloc();
     subbrute_protocol_create_candidate_for_default(candidate, file, step, opencode);
 
-    //#ifdef FURI_DEBUG
-    FURI_LOG_W(TAG, "candidate: %s, step: %lld", furi_string_get_cstr(candidate), step);
-    //#endif
+#ifdef FURI_DEBUG
+    FURI_LOG_D(TAG, "candidate: %s, step: %lld", furi_string_get_cstr(candidate), step);
+#endif
     stream_clean(stream);
 
     if(te) {

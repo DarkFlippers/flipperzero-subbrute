@@ -5,6 +5,8 @@
 #include <flipper_format.h>
 #include <flipper_format_i.h>
 #include <lib/subghz/subghz_protocol_registry.h>
+// use to clear custom_btn
+#include <lib/subghz/blocks/custom_btn.h>
 
 #define TAG                               "SubBruteWorker"
 #define SUBBRUTE_TX_TIMEOUT               6
@@ -351,30 +353,17 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
     }
 
     instance->protocol_name = subbrute_protocol_file(instance->file);
-    FURI_LOG_W(TAG, "Protocol name: %s", instance->protocol_name);
-
-    // TEST DEBUG
-    Stream* stream = flipper_format_get_raw_stream(flipper_format);
-    stream_rewind(stream);
-    test_read_full_stream(stream, "Before 1");
-    // END TEST DEBUG
 
     subghz_devices_reset(instance->radio_device);
     subghz_devices_idle(instance->radio_device);
     subghz_devices_load_preset(instance->radio_device, instance->preset, NULL);
-    stream_rewind(stream);
-    test_read_full_stream(stream, "Before 2");
     subghz_devices_set_frequency(
         instance->radio_device, instance->frequency); // TODO is freq valid check
 
     if(subghz_devices_set_tx(instance->radio_device)) {
-        stream_rewind(stream);
-        test_read_full_stream(stream, "Before 3");
         instance->transmitter =
             subghz_transmitter_alloc_init(instance->environment, instance->protocol_name);
         subghz_transmitter_deserialize(instance->transmitter, flipper_format);
-        stream_rewind(stream);
-        test_read_full_stream(stream, "After 0");
         subghz_devices_start_async_tx(
             instance->radio_device, subghz_transmitter_yield, instance->transmitter);
         while(!subghz_devices_is_async_complete_tx(instance->radio_device)) {
@@ -391,12 +380,7 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
 
     instance->transmit_mode = false;
 
-    // TEST DEBUG
-    // Stream* stream = flipper_format_get_raw_stream(flipper_format);
-    stream_rewind(stream);
-    test_read_full_stream(stream, "After 1");
-    // END TEST DEBUG
-    stream_clean(stream);
+    subghz_custom_btns_reset();
 }
 
 void subbrute_worker_send_callback(SubBruteWorker* instance) {
@@ -480,9 +464,6 @@ int32_t subbrute_worker_thread(void* context) {
         furi_delay_ms(instance->tx_timeout_ms);
     }
 
-    // TEST DEBUG
-    FURI_LOG_W(TAG, "subbrute_worker_thread flipper_format_free");
-    // END TEST DEBUG
     flipper_format_free(flipper_format);
 
     instance->worker_running = false; // Because we have error states
