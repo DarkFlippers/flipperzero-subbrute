@@ -1,3 +1,8 @@
-/.idea/.idea.subbrute.dir/.idea/workspace.xml
-
+dist/*
+.vscode
+.clang-format
+.clangd
+.editorconfig
+.env
+.ufbt
 .DS_Store
