@@ -272,6 +272,8 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
         variable_item_set_current_value_index(item, 0);
     }
 
+    variable_item_list_set_selected_item(var_list, 0);
+
     variable_item_list_set_enter_callback(var_list, setup_extra_enter_callback, instance);
     view_dispatcher_switch_to_view(instance->view_dispatcher, SubBruteViewVarList);
 }
