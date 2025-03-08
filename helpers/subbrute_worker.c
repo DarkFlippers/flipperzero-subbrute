@@ -384,7 +384,7 @@ void subbrute_worker_subghz_transmit(SubBruteWorker* instance, FlipperFormat* fl
 
     Stream* stream = flipper_format_get_raw_stream(flipper_format);
     stream_rewind(stream);
-    test_read_full_stream(stream, "Transmit data");
+    //test_read_full_stream(stream, "Transmit data");
 
     subghz_custom_btns_reset();
 }
@@ -523,6 +523,7 @@ bool subbrute_worker_is_tx_allowed(SubBruteWorker* instance, uint32_t value) {
     return res;
 }
 
+/*
 void test_read_full_stream(Stream* stream, const char* msg) {
     // read data
     // 循环读取stream中的数据每次读取一个字节（uint8_t）
@@ -538,3 +539,4 @@ void test_read_full_stream(Stream* stream, const char* msg) {
     FURI_LOG_W(TAG, "%s Transmit data: %s", msg, data_2);
     free(data_2);
 }
+*/

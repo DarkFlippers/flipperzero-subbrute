@@ -282,4 +282,4 @@ uint8_t subbrute_worker_get_opencode(SubBruteWorker* instance);
 
 bool subbrute_worker_get_is_pt2262(SubBruteWorker* instance);
 
-void test_read_full_stream(Stream* stream, const char* msg);
+//void test_read_full_stream(Stream* stream, const char* msg);
