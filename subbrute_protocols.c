@@ -613,6 +613,7 @@ static const char* subbrute_protocol_file_types[] = {
     [HollarmileProtocol] = "Hollarm",
     [GangQiFileProtocol] = "GangQi",
     [Marantec24FileProtocol] = "Marantec24",
+    [FeronFileProtocol] = "Feron",
     [UnknownFileProtocol] = "Unknown"};
 
 /**
