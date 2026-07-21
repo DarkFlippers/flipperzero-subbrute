@@ -3,11 +3,11 @@
 
 #define TAG "SubBruteSettings"
 
-#define SUBBRUTE_SETTINGS_FILE_TYPE "Sub-GHz BruteForcer Settings File"
+#define SUBBRUTE_SETTINGS_FILE_TYPE    "Sub-GHz BruteForcer Settings File"
 #define SUBBRUTE_SETTINGS_FILE_VERSION 1
-#define SUBBRUTE_SETTINGS_PATH APP_DATA_PATH("bruteforcer.settings")
+#define SUBBRUTE_SETTINGS_PATH         APP_DATA_PATH("bruteforcer.settings")
 
-#define SUBBRUTE_FIELD_LAST_INDEX "LastIndex"
+#define SUBBRUTE_FIELD_LAST_INDEX    "LastIndex"
 #define SUBBRUTE_FIELD_REPEAT_VALUES "RepeatValue"
 
 SubBruteSettings* subbrute_settings_alloc(void) {
